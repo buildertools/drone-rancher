@@ -26,6 +26,17 @@ build:
 	  -w /go/src/github.com/buildertools/drone-rancher \
 	  -e GOOS=darwin \
 	  -e GOARCH=amd64 \
+	  -e CGO_ENABLED=0 \
 	  golang:1.7 \
-	  go build -o bin/drone-rancher
+	  go build -o bin/drone-rancher-darwin64
+	 @docker run --rm \
+	  -v $(PWD):/go/src/github.com/buildertools/drone-rancher \
+	  -v $(PWD)/bin:/go/bin \
+	  -v $(PWD)/pkg:/go/pkg \
+	  -w /go/src/github.com/buildertools/drone-rancher \
+	  -e GOOS=linux \
+	  -e GOARCH=amd64 \
+	  -e CGO_ENABLED=0 \
+	  golang:1.7 \
+	  go build -o bin/drone-rancher-linux64
 	  
